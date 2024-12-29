@@ -36,9 +36,9 @@
                 <tbody>
                     {% for media in media_files %}
                     <tr>
-                        <td>{{ media.filename }}</td>
+                        <td>{{ media.file_name }}</td>
                         <td>{{ media.category }}</td>
-                        <td>{{ media.size|filesizeformat }}</td>
+                        <td>{{ media.file_size|filesizeformat }}</td>
                         <td>{{ media.uploaded_at|date:"Y-m-d H:i" }}</td>
                         <td>
                             <a href="{% url 'media_detail' media.pk %}" class="btn btn-sm btn-info">View</a>
