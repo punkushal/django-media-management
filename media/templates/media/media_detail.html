@@ -1,0 +1,39 @@
+{% extends 'media/base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{ media.filename }}</h5>
+        <div class="mb-3">
+            <strong>Category:</strong> {{ media.category }}<br>
+            <strong>Size:</strong> {{ media.size|filesizeformat }}<br>
+            <strong>Uploaded:</strong> {{ media.uploaded_at|date:"Y-m-d H:i" }}
+        </div>
+
+        <div class="mb-3">
+            {% if media.category == 'Image' %}
+                <img src="{{ media.file.url }}" class="img-fluid" alt="{{ media.filename }}">
+            {% elif media.category == 'Video' %}
+                <video controls class="w-100">
+                    <source src="{{ media.file.url }}" type="{{ media.file_type }}">
+                    Your browser does not support the video tag.
+                </video>
+            {% elif media.category == 'Audio' %}
+                <audio controls class="w-100">
+                    <source src="{{ media.file.url }}" type="{{ media.file_type }}">
+                    Your browser does not support the audio tag.
+                </audio>
+            {% endif %}
+        </div>
+
+        <div>
+            <a href="{% url 'media_list' %}" class="btn btn-secondary">Back to List</a>
+           
+            <form method="post" action="{% url 'media_delete' media.pk %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
