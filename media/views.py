@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from .models import MediaFile
 from .forms import MediaFileForm
@@ -32,3 +32,8 @@ def media_list(request):
 
     media_files = MediaFile.objects.all().order_by('-uploaded_at')
     return render(request, 'media/media_list.html', {'media_files': media_files})
+
+
+def media_detail(request, pk):
+    media = get_object_or_404(MediaFile, pk=pk)
+    return render(request, 'media/media_detail.html', {'media': media})
