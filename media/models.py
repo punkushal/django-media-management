@@ -14,3 +14,12 @@ class MediaFile(models.Model):
     file_type = models.CharField(max_length=50)
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
     uploaded_at = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return self.filename
+
+    def delete(self, *args, **kwargs):
+        # Delete the file from filesystem when model is deleted
+        self.file.delete()
+        super().delete(*args, **kwargs)
