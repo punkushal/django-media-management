@@ -42,7 +42,7 @@ def media_detail(request, pk):
 def media_delete(request, pk):
     if request.method == 'POST':
         media = get_object_or_404(MediaFile, pk=pk)
-        filename = media.filename
+        filename = media.file_name
         media.delete()
         messages.success(request, f'Successfully deleted {filename}')
         return redirect('media_list')
