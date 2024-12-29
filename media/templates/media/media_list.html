@@ -40,6 +40,15 @@
                         <td>{{ media.category }}</td>
                         <td>{{ media.size|filesizeformat }}</td>
                         <td>{{ media.uploaded_at|date:"Y-m-d H:i" }}</td>
+                        <td>
+                            <a href="{% url 'media_detail' media.pk %}" class="btn btn-sm btn-info">View</a>
+                            <a href="{% url 'media_download' media.pk %}" class="btn btn-sm btn-success">Download</a>
+                            <form method="post" action="{% url 'media_delete' media.pk %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                            </form>
+                        </td>
+
                     </tr>
                     {% empty %}
                     <tr>
