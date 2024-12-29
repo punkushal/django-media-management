@@ -1,3 +1,4 @@
+from django.http import FileResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from .models import MediaFile
@@ -37,3 +38,17 @@ def media_list(request):
 def media_detail(request, pk):
     media = get_object_or_404(MediaFile, pk=pk)
     return render(request, 'media/media_detail.html', {'media': media})
+
+def media_delete(request, pk):
+    if request.method == 'POST':
+        media = get_object_or_404(MediaFile, pk=pk)
+        filename = media.filename
+        media.delete()
+        messages.success(request, f'Successfully deleted {filename}')
+        return redirect('media_list')
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+def media_download(request, pk):
+    media = get_object_or_404(MediaFile, pk=pk)
+    response = FileResponse(media.file, as_attachment=True)
+    return response
