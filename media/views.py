@@ -18,8 +18,8 @@ def media_list(request):
             if form.is_valid():
                 media = MediaFile(
                     file=file,
-                    filename=file.name,
-                    size=file.size,
+                    file_name=file.name,
+                    file_size=file.size,
                     file_type=file.content_type,
                     category=get_file_category(file.name)
                 )
